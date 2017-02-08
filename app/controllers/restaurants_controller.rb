@@ -5,6 +5,8 @@ class RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant.find(params[:id])
+    @review = Review.new
+    @average = average(params[:id])
   end
 
   def new
@@ -25,5 +27,21 @@ class RestaurantsController < ApplicationController
 
 def resto_params
   params.require(:restaurant).permit(:name, :address, :phone_number, :category)
+end
+
+def average(id)
+  restaurant = Restaurant.find(id)
+  avg = 0
+  size = restaurant.reviews.size
+  sum = 0
+  if size == 0
+    avg = 0
+  else
+    restaurant.reviews.each do |review|
+      sum += review.rating
+    end
+  avg = sum/size
+  end
+  avg
 end
 end

@@ -2,15 +2,29 @@
   <h1><%= @restaurant.name %></h1>
         <p>This restaurant is located at <%= @restaurant.address %></p>
         <p> The food type is <%= @restaurant.category %></p>
+        <p> Average Rating : <%= @average %></p>
         <%= link_to "Back", restaurants_path %>
     <div>
     <% @restaurant.reviews.each do |review| %>
       <ul>
         <li>
           <h3><%= review.content %></h3>
-          <p><%= review.rating %></p>
+          <p> Rating: <%= review.rating %></p>
         </li>
       </ul>
       <% end %>
     </div>
 </div>
+
+
+<div class="container">
+
+      <%= simple_form_for [@restaurant, @review] do |f| %>
+        <%= f.input :content %>
+        <%= f.input :rating %>
+        <%= f.submit "add a review", class: "btn btn-primary" %>
+      <% end %>
+
+</div>
+
+
